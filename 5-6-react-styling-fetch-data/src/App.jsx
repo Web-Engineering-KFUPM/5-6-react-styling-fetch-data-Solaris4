@@ -179,7 +179,7 @@ END OF LAB INSTRUCTIONS
 */
 
 import { useEffect, useState } from "react";
-import { Container, Spinner, Alert } from "react-bootstrap";
+import { Alert, Container, Spinner } from "react-bootstrap";
 import SearchBar from "./components/SearchBar";
 import UserList from "./components/UserList";
 import UserModal from "./components/UserModal";
@@ -230,7 +230,7 @@ export default function App() {
 
   return (
     <div className="app">
-      {/* TODO 1.1: Set header className EXACTLY as in lab instructions */}
+      {   "bg-primary text-white py-3 mb-4 shadow"}
       <header className="">
         <Container>
           <h1 className="h2 mb-0">User Management Dashboard</h1>
@@ -253,7 +253,7 @@ export default function App() {
         <UserModal show={showModal} user={selectedUser} onHide={handleCloseModal} />
       </Container>
 
-      {/* TODO 1.1: Set footer className EXACTLY as in lab instructions */}
+      {   "bg-light py-4 mt-5"}
       <footer className="">
         <Container>
           <small className="text-muted">SWE 363 — React Lab</small>

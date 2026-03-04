@@ -177,7 +177,6 @@ Hint:
 END OF LAB INSTRUCTIONS
 ===================================================================
 */
-
 import { useEffect, useState } from "react";
 import { Alert, Container, Spinner } from "react-bootstrap";
 import SearchBar from "./components/SearchBar";
@@ -203,7 +202,25 @@ export default function App() {
      Implement fetch logic inside this useEffect.
      ========================================================= */
   useEffect(() => {
-    // TODO 2.1: Implement fetching users here (see lab instructions)
+    const fetchUsers = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const res = await fetch("https://jsonplaceholder.typicode.com/users");
+        if (!res.ok) throw new Error("Failed to fetch users");
+
+        const data = await res.json();
+        setUsers(data);
+        setFilteredUsers(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
   }, []);
 
   /* =========================================================
@@ -214,7 +231,16 @@ export default function App() {
      Dependency array MUST be: [searchTerm, users]
      ========================================================= */
   useEffect(() => {
-    // TODO 2.2: Implement filtering users here (see lab instructions)
+    if (!searchTerm) {
+      setFilteredUsers(users);
+      return;
+    }
+
+    const filtered = users.filter((user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    setFilteredUsers(filtered);
   }, [searchTerm, users]);
 
   // Modal handlers (already complete)
@@ -230,7 +256,7 @@ export default function App() {
 
   return (
     <div className="app">
-      {   "bg-primary text-white py-3 mb-4 shadow"}
+      { "bg-primary text-white py-3 mb-4 shadow" }
       <header className="">
         <Container>
           <h1 className="h2 mb-0">User Management Dashboard</h1>
@@ -250,10 +276,14 @@ export default function App() {
           <UserList users={filteredUsers} onUserClick={handleUserClick} />
         )}
 
-        <UserModal show={showModal} user={selectedUser} onHide={handleCloseModal} />
+        <UserModal
+          show={showModal}
+          user={selectedUser}
+          onHide={handleCloseModal}
+        />
       </Container>
 
-      {   "bg-light py-4 mt-5"}
+      { "bg-light py-4 mt-5" }
       <footer className="">
         <Container>
           <small className="text-muted">SWE 363 — React Lab</small>
